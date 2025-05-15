@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+@mixin flexBox($color){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color : $color
+}
+nav{
+    @include flexBox(red);
+}
+
+h2{
+    animation-name: scrollIt;
+    animation-timeline: view();
+    border : 5px solid red ;
+    margin-top: 20px;
+    transition: all 2s;
+}
+
+@keyframes scrollIt {
+    0%{
+        opacity: 0;
+        transform: translateX(700px);
+    }
+    50%{
+        opacity: 1;
+        transform: translateX(0px);
+    }
+    100%{
+        opacity: 1;
+    }
+}
