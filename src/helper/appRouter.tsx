@@ -6,6 +6,8 @@ import { ProtectedRoutes } from "./protectedRoutes";
 import { CreateAccount } from "../components/createAccountPage";
 import { AdminDashBoard } from "../components/adminDashboard";
 import { EmployeeDashboard } from "../components/EmployeeDashboard";
+import Upload from "../components/uploads";
+import Uploads from "../components/uploads";
 
 
 const  AppRouter = createBrowserRouter([
@@ -20,6 +22,16 @@ const  AppRouter = createBrowserRouter([
                     <>
                         <Navbar />    
                         <LoginPage />
+                    </>
+                )
+
+            },
+            {
+                path : '/upload' ,
+                element : (
+                    <>
+                        <Navbar />    
+                        <Uploads />
                     </>
                 )
 
