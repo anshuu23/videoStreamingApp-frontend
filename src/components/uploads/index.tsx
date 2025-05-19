@@ -43,73 +43,124 @@
 //   );
 // }
 
-import React, { useEffect, useState } from 'react';
-import { InboxOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import { Button, message, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+// import React, { useEffect, useState } from 'react';
+// import { InboxOutlined } from '@ant-design/icons';
+// import type { UploadProps } from 'antd';
+// import { Button, message, Upload } from 'antd';
+// import { UploadOutlined } from '@ant-design/icons';
 
-const { Dragger } = Upload;
-
-
-
-const Uploads: React.FC = () => {
+// const { Dragger } = Upload;
 
 
-    const [signedUrl, setSignedUrl] = useState('')
-    const [videoName, setVideoName] = useState('')
-    const [isFileDroped, setIsFileDroped] = useState(false)
 
-    const props: UploadProps = {
+// const Uploads: React.FC = () => {
 
-        multiple: false,
-        method: 'put',
-        action: signedUrl,
-        name: videoName + 'mp4',
-        accept: '.mp4',
-        maxCount: 1,
-        onChange(info: { file: { name?: any; status?: any; }; fileList: any; }) {
-            const { status } = info.file;
-            if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-        onDrop(e: { dataTransfer: { files: any; }; }) {
-            console.log('Dropped files', e.dataTransfer.files);
-            setIsFileDroped(true)
-        },
-        beforeUpload(file) {
-            const renamed = new File([file], videoName + '.mp4', { type: file.type });
-            console.log('filerenamed')
-            return renamed;
-        },
 
-    };
-    useEffect(() => {
-        fetch('http://localhost:3002/getSignedUrl')
-            .then(res => res.json())
-            .then(res => {
-                console.log(res.data)
-                setSignedUrl(res.data[0])
-                setVideoName(res.data[1])
-            })
-    }, [])
+//     const [signedUrl, setSignedUrl] = useState('')
+//     const [videoName, setVideoName] = useState('')
+//     const [isFileDroped, setIsFileDroped] = useState(false)
 
-    return (
-        <>{
-            signedUrl &&
+//     const props: UploadProps = {
+
+//         multiple: false,
+//         method: 'put',
+//         action: signedUrl,
+//         name: videoName ,
+//         accept: '.mp4',
+//         maxCount: 1,
+//         onChange(info: { file: { name?: any; status?: any; }; fileList: any; }) {
+//             const { status } = info.file;
+//             if (status !== 'uploading') {
+//                 console.log(info.file, info.fileList);
+//             }
+//             if (status === 'done') {
+//                 message.success(`${info.file.name} file uploaded successfully.`);
+//             } else if (status === 'error') {
+//                 message.error(`${info.file.name} file upload failed.`);
+//             }
+//         },
+//         onDrop(e: { dataTransfer: { files: any; }; }) {
+//             console.log('Dropped files', e.dataTransfer.files);
+//             setIsFileDroped(true)
+//         },
+//         beforeUpload(file) {
+//             const renamed = new File([file], videoName , { type: file.type });
+//             console.log('filerenamed')
+//             return renamed;
+//         },
+
+//     };
+//     useEffect(() => {
+//         fetch('http://localhost:3002/getSignedUrl')
+//             .then(res => res.json())
+//             .then(res => {
+//                 console.log(res.data)
+//                 setSignedUrl(res.data[0])
+//                 setVideoName(res.data[1])
+//             })
+//     }, [])
+
+//     return (
+//         <>{
+//             signedUrl &&
             
-             <Upload {...props}>
-                <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
-            }
-        </>
-    )
+//              <Upload {...props}>
+//                 <Button icon={<UploadOutlined />}>Upload</Button>
+//             </Upload>
+//             }
+//         </>
+//     )
+// };
+
+// export default Uploads;
+
+
+import React, { useState, useEffect } from 'react';
+
+const UploadS3 = () => {
+  const [signedUrl, setSignedUrl] = useState('');
+  const [videoName, setVideoName] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:3002/getSignedUrl')
+      .then((res) => res.json())
+      .then((res) => {
+        setSignedUrl(res.data[0]);
+        setVideoName(res.data[1]);
+      });
+  }, []);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !signedUrl) return;
+
+    try {
+      const res = await fetch(signedUrl, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'video/mp4',
+        },
+        body: file, // RAW binary data
+      });
+
+      if (res.ok) {
+        alert('Upload successful');
+      } else {
+        alert('Upload failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error uploading file');
+    }
+  };
+
+  return (
+    <>
+      {signedUrl && (
+        <input type="file" accept="video/mp4" onChange={handleUpload} />
+      )}
+    </>
+  );
 };
 
-export default Uploads;
+export default UploadS3;
