@@ -36,7 +36,15 @@ const  AppRouter = createBrowserRouter([
                 )
 
             },
-            
+            {
+                path : '/main' ,
+                element : (
+                    <>
+                        <Navbar /> 
+                        <MainPage />
+                    </>
+                )
+            },
             {
                 path : '/createAccount' ,
                 element : (
