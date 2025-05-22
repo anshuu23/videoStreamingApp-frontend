@@ -74,7 +74,7 @@ function LoginPage() {
 
             </div>
         </div>
-      <form action=""  onSubmit={(e)=>{btnClicked(e)}} className=' text-neutral-300 max-w-[300px] m-auto mt-[10vw]' >
+      <form action=""  onSubmit={(e)=>{btnClicked(e)}} className='signupForm text-neutral-300 max-w-[300px] m-auto mt-[10vw]' >
 
         <h1 className="text-3xl font-[Ancizar Sans]      font-extrabold mb-5 text-center">Log-in</h1>
 

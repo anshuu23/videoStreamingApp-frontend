@@ -8,6 +8,7 @@ import { AdminDashBoard } from "../components/adminDashboard";
 import { EmployeeDashboard } from "../components/EmployeeDashboard";
 import Upload from "../components/uploads";
 import Uploads from "../components/uploads";
+import WatchVideoPage from "../components/watchVideo";
 
 
 const  AppRouter = createBrowserRouter([
@@ -37,7 +38,17 @@ const  AppRouter = createBrowserRouter([
 
             },
             {
-                path : '/main' ,
+                path : '/video/:id' ,
+                element : (
+                    <>
+                        <Navbar />    
+                        <WatchVideoPage />
+                    </>
+                )
+
+            },
+            {
+                path : '/' ,
                 element : (
                     <>
                         <Navbar /> 
