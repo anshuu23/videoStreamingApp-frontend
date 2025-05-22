@@ -1,92 +1,113 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import "../index.css"
 import { useNavigate  } from "react-router-dom";
+import { apiRequest } from "../helper/request";
 function LoginPage() {
-  const navigate = useNavigate()
+  const [value, setValue] = useState({
+    userName : '',
+    email : '' ,
+    password : ''
+  })
+          const navigate = useNavigate();
 
-  const [value, changeValue] = useState({
-    userEmail : "",
-    userPassword : ""
-  });
+  const [er , changeEr]= useState('')
+  const [currentField , changeCurrentField] = useState('')
 
-  const [ parsedRes ,changeParsedRes] = useState('')
-  function handelInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value} = e.target;
-
-    changeValue((prev) => ({
-      ...prev,
-      [name]:  value,
-    }));
+  const btnClicked = async(e :  FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log(value)
+    const res : any = await apiRequest('/loginUser' , {
+    method : 'POST' ,
+     body:{
+        userName : value.userName ,
+        userEmail : value.email,
+        userPassword : value.password 
+    }})
+    console.log('res---' , res)
+    if(res.status == 200){
+        localStorage.setItem("token" , res.data)
+         console.log(res.status)
+        navigate('/main')
+    }
   }
 
-  async function formSubmitted(e: React.FormEvent) {
-    e.preventDefault();
-    console.log(value);
+  const onChange = (e :  React.ChangeEvent<HTMLInputElement>) =>{
+    setValue(prev => ({
+      ...prev , 
+      [e.target.name] : e.target.value
+    }))
+    validateInput(e.target.name , e.target.value)
+    changeCurrentField(e.target.name)
+  }
 
-    const res = await fetch("http://localhost:2001/LoginUser", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+  const validateInput = (name : string ,value : string) =>{
+
+    if(name == "userName"){
+      
+      if(value.length<3){
+        changeEr(`${name} length should me more than 3`)
         
-        userEmail : value.userEmail,
-        userPassword : value.userPassword
-
-      }),
-      method: "POST",
-    });
-
-    console.log("res.status-----", res.status);
-
-    // if(res.status == 200){
-    //     changeIsPhotoUploaded("photo uploaded successfully")
-    // }
-    // else{
-    //     changeIsPhotoUploaded("error in uploading photo")
-    // }
-    if(res.status == 201){
-        alert("account created successfully")
-        navigate("/login")
+      }
+      else if(value.length > 10){
+        changeEr(`${name} length must me less than 10`)
+      }
+      else{
+        changeEr('')
+      }
+      console.log(er)
     }
-    const hi = await res.json();
-    changeParsedRes(hi);
-    console.log(parsedRes);
-    window.localStorage.setItem("token" , parsedRes?.data.token)
-    window.localStorage.setItem("role" , parsedRes.data.role)
 
-    alert("you are now logged in")
-    if(parsedRes.data.role == "Admin"){
-        navigate("/adminDashboard")
+     else if(name == "email" && !value.includes('@')){
+      changeEr(`pls ente rvalid email`)
+    }else{
+      changeEr(``)
     }
+
   }
+
   return (
     <>
-      <h1>Log In</h1>
+    <div className='bg-black min-h-[100vh] font-[Poppins] md:grid grid-cols-2 '>
+    
+        <div className=" h-[100%] pt-[2%]">
+            <div className=" h-[98%] w-[95%] bg-amber-400 m-auto rounded-4xl bg-contain">
 
-      <form onSubmit={formSubmitted}>
+            </div>
+        </div>
+      <form action=""  onSubmit={(e)=>{btnClicked(e)}} className=' text-neutral-300 max-w-[300px] m-auto mt-[10vw]' >
 
-       
-        <input
-          type="email"
-          name="userEmail"
-          onChange={handelInputChange}
-          placeholder="enter email"
-          required
-        />
+        <h1 className="text-3xl font-[Ancizar Sans]      font-extrabold mb-5 text-center">Log-in</h1>
 
-        <input
-          type="text"
-          name="userPassword"
-          onChange={handelInputChange}
-          placeholder="enter password"
-          required
-        />
+        <p className="">enter your credentials to log-in</p>
+        <br />
+        Name :
+        <br />
+        <input type="text" name='userName' value = {value.userName} onChange={(e)=>{onChange(e)}} className='order-black' required/>
+        <br />
+        {currentField == 'userName' ? er : <></>}
+        <br />
 
+        email :
+        <input type="email" name='email' value = {value.email} onChange={(e)=>{onChange(e)}} className='border-black' required />
+        <br />
+        {currentField == 'email' && er ? er : <></>}
+        <br />
 
-        <button>send</button>
+        Password :
+        <input type="password" name='password' value = {value.password} onChange={(e)=>{onChange(e)}} 
+        className='border-black' required />
+        <br />
+        {currentField == 'password' && er ? er : <></>}   
+        <br />
 
-        </form>
+        <button type='submit' className="!bg-amber-400 !text-black font-extrabold cursor-pointer ">log-in</button>
+        <br />
+        <br />
+        <p>new user ? <a href="/signup" className="!text-amber-400 underline">sign-up</a> to crux</p>
+      </form>
+     </div>
     </>
-  );
+  )
 }
 
 export {LoginPage}

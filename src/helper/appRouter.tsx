@@ -11,16 +11,16 @@ import Uploads from "../components/uploads";
 
 
 const  AppRouter = createBrowserRouter([
+
     {
         path : '/' ,
-        // element :  <ProtectedRoutes />,
-         element :  <Outlet />,
+         element :  <ProtectedRoutes />,
+         //element :  <Outlet />,
         children : [            
             {
                 path : '/login' ,
                 element : (
                     <>
-                        <Navbar />    
                         <LoginPage />
                     </>
                 )

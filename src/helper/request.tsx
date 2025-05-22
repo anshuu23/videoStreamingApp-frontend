@@ -1,0 +1,42 @@
+// utils/request.ts
+type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+interface RequestOptions {
+  method?: RequestMethod;
+  headers?: Record<string, string>;
+  body?: any;
+  token?: string;
+}
+
+const BASE_URL = 'http://localhost:3000';
+
+export async function apiRequest<T>(
+  endpoint: string,
+  options: RequestOptions = {}
+): Promise<T> {
+  const { method = 'GET', headers = {}, body, token } = options;
+
+  const fetchOptions: RequestInit = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...headers,
+    },
+    ...(body ? { body: JSON.stringify(body) } : {}),
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}`, fetchOptions);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.message || 'Request failed');
+    }
+
+    return data as T;
+  } catch (error: any) {
+    console.error('API Request Error:', error.message);
+    throw error;
+  }
+}
