@@ -3,23 +3,21 @@ import { Navbar } from "../components/navbar/navbar";
 import { LoginPage } from "../components/loginPage";
 import { MainPage } from "../components/mainPage";
 import { ProtectedRoutes } from "./protectedRoutes";
-import { CreateAccount } from "../components/createAccountPage";
+import {  SignupPage } from "../components/signupPage";
 import { AdminDashBoard } from "../components/adminDashboard";
-import { EmployeeDashboard } from "../components/EmployeeDashboard";
-import Upload from "../components/uploads";
-import Uploads from "../components/uploads";
 import WatchVideoPage from "../components/watchVideo";
+import { VideoDetailsForm } from "../components/uploads/videoDetails";
+import { UserRoutes } from "./userRoutes";
 
 
 const  AppRouter = createBrowserRouter([
-
     {
-        path : '/' ,
-         element :  <ProtectedRoutes />,
-         //element :  <Outlet />,
-        children : [            
-            {
-                path : '/login' ,
+        path : '/user',
+        element :  <UserRoutes />,
+        children : [
+            
+                {
+                path : '/user/login' ,
                 element : (
                     <>
                         <LoginPage />
@@ -28,11 +26,28 @@ const  AppRouter = createBrowserRouter([
 
             },
             {
+                path : '/user/signup' ,
+                element : (
+                    <>
+                        <SignupPage />
+                    </>
+                )
+
+            },
+            
+        ]
+    },
+    {
+        path : '/' ,
+         element :  <ProtectedRoutes />,
+         //element :  <Outlet />,
+        children : [            
+            
+            {
                 path : '/upload' ,
                 element : (
                     <>
-                        <Navbar />    
-                        <Uploads />
+                        <VideoDetailsForm />
                     </>
                 )
 
@@ -56,15 +71,7 @@ const  AppRouter = createBrowserRouter([
                     </>
                 )
             },
-            {
-                path : '/createAccount' ,
-                element : (
-                    <>
-                        <Navbar /> 
-                        <CreateAccount />
-                    </>
-                )
-            },
+           
             {
                 path : '/adminDashboard' ,
                 element : (
@@ -74,15 +81,7 @@ const  AppRouter = createBrowserRouter([
                     </>
                 )
             },
-            {
-                path : '/employeeDashboard' ,
-                element : (
-                    <>
-                        <Navbar /> 
-                        <EmployeeDashboard />
-                    </>
-                )
-            },
+        
         ]
     }
 ])

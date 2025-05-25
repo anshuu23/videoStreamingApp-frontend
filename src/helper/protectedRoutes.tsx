@@ -12,10 +12,10 @@ function ProtectedRoutes() {
   useEffect(() => {
     if (!token ) {
       console.log("no token");
-      navigate("/login");
+      navigate("/user/login");
     }
     else{
-        if(location.pathname === "/createAccount" || location.pathname === "/login"){
+        if(location.pathname === "/signup" || location.pathname === "/login"){
             navigate('/main')
         }
     }

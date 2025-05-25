@@ -3,7 +3,7 @@
 @import url('https://fonts.cdnfonts.com/css/miltonian-2');
 @import url('https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap');
 
-  .signupForm input ,.signupForm button{
+  .signupForm input ,.signupForm button , .signupForm textarea{
     background-color: rgb(47, 44, 44);
     color: white;
     height: 40px;
@@ -11,4 +11,20 @@
     border-radius: 10px;
     font-size: 16px;
     padding: 0 10px;
+}
+.signupForm textarea{
+    height: 150px;
+}
+body{
+    background-color: black;
+}
+ 
+.container {
+  width: 100%;
+  height: 100%;
+  --color: rgba(114, 114, 114, 0.3);
+  background-color: #191a1a;
+  background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent),
+      linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
+  background-size: 55px 55px;
 }

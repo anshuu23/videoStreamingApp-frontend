@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState , useEffect } from "react";
 import "../index.css"
 import { useNavigate  } from "react-router-dom";
 import { apiRequest } from "../helper/request";
@@ -8,7 +8,7 @@ function LoginPage() {
     email : '' ,
     password : ''
   })
-          const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const [er , changeEr]= useState('')
   const [currentField , changeCurrentField] = useState('')
@@ -27,7 +27,7 @@ function LoginPage() {
     if(res.status == 200){
         localStorage.setItem("token" , res.data)
          console.log(res.status)
-        navigate('/main')
+        navigate('/')
     }
   }
 
@@ -70,8 +70,8 @@ function LoginPage() {
     <div className='bg-black min-h-[100vh] font-[Poppins] md:grid grid-cols-2 '>
     
         <div className=" h-[100%] pt-[2%]">
-            <div className=" h-[98%] w-[95%] bg-amber-400 m-auto rounded-4xl bg-contain">
-
+            <div className=" h-[98%] w-[95%] bg-[rgb(47_47_42)] bg-[url(/images/img3.svg)] m-auto rounded-4xl  bg-center bg-no-repeat bg-cover">
+                
             </div>
         </div>
       <form action=""  onSubmit={(e)=>{btnClicked(e)}} className='signupForm text-neutral-300 max-w-[300px] m-auto mt-[10vw]' >
@@ -103,7 +103,7 @@ function LoginPage() {
         <button type='submit' className="!bg-amber-400 !text-black font-extrabold cursor-pointer ">log-in</button>
         <br />
         <br />
-        <p>new user ? <a href="/signup" className="!text-amber-400 underline">sign-up</a> to crux</p>
+        <p>new user ? <a href="/user/signup" className="!text-amber-400 underline">sign-up</a> to crux</p>
       </form>
      </div>
     </>
