@@ -12,6 +12,8 @@ function VideoDetailsForm() {
     ];
     const [signedUrl, setSignedUrl] = useState('');
     const [videoName, setVideoName] = useState('');
+    const [isFileAdded, setIsFileAdded] = useState(false);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const [value, changeValue] = useState({
         videoTitle: "",
@@ -106,7 +108,7 @@ function VideoDetailsForm() {
 
     }
 
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVideoFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file || !signedUrl) return;
 
@@ -124,38 +126,49 @@ function VideoDetailsForm() {
             e.target.value = "";
             return;
         }
+        setSelectedFile(file);
+        setIsFileAdded(true)
 
-        try {
-            const res = await fetch(signedUrl, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'video/mp4',
-                },
-                body: file, // RAW binary data
-            });
-
-            if (res.ok) {
-                alert('Upload successful');
-            } else {
-                alert('Upload failed');
-            }
-        } catch (err) {
-            console.error(err);
-            alert('Error uploading file');
         }
-    };
+
+    const handleVideoFileUpload = async () => {
+    if (!selectedFile || !signedUrl) {
+        alert("No file selected or signed URL missing.");
+        return;
+    }
+
+    try {
+        const res = await fetch(signedUrl, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'video/mp4',
+            },
+            body: selectedFile,
+        });
+
+        if (res.ok) {
+            alert('✅ Upload successful');
+        } else {
+            alert('❌ Upload failed');
+        }
+    } catch (err) {
+        console.error(err);
+        alert('❌ Error uploading file');
+    }
+};
+
 
     return (
         <>
-            {!signedUrl && <div className="bg-black min-h-[100vh] pt-[8vh] text-white max-w-[1200px] m-auto p-5">
+            {!signedUrl && <div className="bg-[#000000] min-h-[100vh] pt-[8vh] text-white max-w-[1200px] m-auto p-5">
 
-                <div className=" h-[300px] flex flex-col justify-center mt-[10vh] rounded-3xl border-2">
+                <div className=" h-[50vh] flex flex-col justify-center rounded-3xl border-2  mt-[10vh]   bg-[url(/images/loginPage.png)]  bg-cover">
                     <h1 className="text-5xl font-semibold text-center mt-5">Upload Video</h1>
-                    <h2 className="text-center mt-5 text-blue-500">Step 1: Video Details</h2>
+                    <h2 className="text-center mt-5 text-blue-500 text-2xl">Step 1: Video Details</h2>
                 </div>
 
 
-                <form onSubmit={formSubmitted} encType="multipart/form-data" className='container signupForm  m-auto  text-[20px] p-11 mt-8 rounded-3xl ' >
+                <form onSubmit={formSubmitted} encType="multipart/form-data" className='bg-[#181818] signupForm  m-auto  text-[20px] p-11 mt-8 rounded-3xl text-3xl ' >
                     Title:
                     <br />
                     <input
@@ -174,6 +187,7 @@ function VideoDetailsForm() {
                         onChange={handleInputChange}
                         placeholder="Video Description"
                         required
+                        className="!p-3.5"
                     ></textarea>
                     <br /><br />
                     Tags:
@@ -214,8 +228,9 @@ function VideoDetailsForm() {
                         <option value="unlisted">Unlisted</option>
                     </select>
 
-                    <br /><br />
+                    <br /><br /><br />
                     Thumbnail:
+                    <br /><br />
                     <input
                         type="file"
                         accept="image/*"
@@ -225,7 +240,7 @@ function VideoDetailsForm() {
 
                     <br />
                     <br />
-                    <button type="submit" className="!bg-blue-500 font-bold">Continue to Upload Video</button>
+                    <button type="submit" className="!bg-blue-500 font-bold text-2xl">Continue to Upload Video</button>
 
                     {parsedRes && <p>{parsedRes}</p>}
                 </form>
@@ -233,17 +248,30 @@ function VideoDetailsForm() {
             {
                 signedUrl && (
                     <>
-                        <div className="bg-black min-h-[100vh] pt-[8vh] text-white max-w-[1200px] m-auto p-5">
+                        <div className="bg-black min-h-[100vh] pt-[8vh] text-white max-w-[1200px] m-auto p-5 text-2xl">
 
-                            <div className=" h-[300px] flex flex-col justify-center mt-[10vh] rounded-3xl border-2">
+                            <div className=" h-[300px] flex flex-col justify-center mt-[10vh] rounded-3xl border-2 mb-8">
                                 <h1 className="text-5xl font-semibold text-center mt-5">Upload Video</h1>
                                 <h2 className="text-center mt-5 text-blue-500">Step 2: Upload Video</h2>
                             </div>
 
                             Video file :
-                            {
-                                <input type="file" accept="video/mp4" onChange={handleUpload} />
-                            }
+                            
+                                <>
+                                <input
+                                    className="h-13 bg-white text-black w-full rounded-3xl p-2 pl-4 mt-4"
+                                    type="file"
+                                    accept="video/mp4"
+                                    onChange={handleVideoFileChange}
+                                />
+                                <p>
+                                    {selectedFile && <p>Selected: {selectedFile.name}</p>}
+
+                                </p>
+                                <button onClick={handleVideoFileUpload} className="h-13 w-34  bg-amber-400 rounded-3xl p-2 mt-5 text-black cursor-pointer">Upload</button>
+                            </>
+
+                            
                         </div >
                     </>
                 )

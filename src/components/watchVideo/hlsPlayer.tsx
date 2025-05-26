@@ -44,10 +44,10 @@ const HlsPlayer = ({ src }) => {
   };
 
   return (
-    <div>
+    <div >
       <video ref={videoRef} controls style={{ width: "100%", maxWidth: 800 , margin:"auto" , boxShadow: "0 0 10px 1px rgba(75, 75, 75, 0.8)",borderRadius : "20px" }} />
       {levels.length > 0 && (
-        <div style={{ marginTop: "10px" }}>
+        <div style={{ marginTop: "25px" ,  maxWidth: 800 , margin:"auto"}}>
           <label style={{ marginRight: "8px" }}>Quality:</label>
           <select value={currentLevel} onChange={handleQualityChange}>
             {levels.map((level) => (

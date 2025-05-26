@@ -5,17 +5,29 @@ import SearchBar from './searchBar'
 function Navbar(){
     const navigate = useNavigate()
     return(
-        <div className='flex items-center h-[8vh] px-[10%] m-auto justify-between bg-black text-white fixed w-full shadow-[0_0_4px_1px_rgba(255,255,255,0.5)]  '  >
+        <div className='flex items-center h-[8vh] px-[3%] m-auto justify-between bg-[#1e1d1d] text-white fixed w-full z-10 '  >
             
             <div>
-                <h1>crux</h1>
-            </div>
-            <div className=''>
-                <SearchBar />
+                <h1 className='text-[20px] font-semibold text-amber-300'>crux</h1>
             </div>
 
-            <div>
-                <button className='flex items-center px-2.5 py-1 border-1 rounded-[17px] cursor-pointer shadow-[0_0_4px_1px_rgba(255,255,255,0.5)]' onClick={()=>navigate('/upload')} >Upload</button>
+            <div className='flex items-center text-white  gap-10  '>
+
+                <div className=''>
+                    <SearchBar />
+                </div>
+
+                <div>
+                    <a href="/about" className='hover:underline'>About</a>
+                </div>
+
+                <div>
+                    <button className='flex items-center px-5 py-1.5 border-1 rounded-[30px] cursor-pointer  bg-white  font-semibold text-zinc-800 hover:bg-amber-400 hover:text-white transition-all duration-700 ' onClick={()=>navigate('/upload')} >Upload</button>
+                </div>
+
+                <div className='p-2 px-4 rounded-4xl bg-blue-500'>
+                    A
+                </div>
             </div>
         
         </div>

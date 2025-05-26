@@ -19,7 +19,6 @@ function LoginPage() {
     const res : any = await apiRequest('/loginUser' , {
     method : 'POST' ,
      body:{
-        userName : value.userName ,
         userEmail : value.email,
         userPassword : value.password 
     }})
@@ -67,11 +66,17 @@ function LoginPage() {
 
   return (
     <>
-    <div className='bg-black min-h-[100vh] font-[Poppins] md:grid grid-cols-2 '>
+    <div className=' min-h-[100vh] font-[Poppins] md:grid grid-cols-2 '>
     
-        <div className=" h-[100%] pt-[2%]">
-            <div className=" h-[98%] w-[95%] bg-[rgb(47_47_42)] bg-[url(/images/img3.svg)] m-auto rounded-4xl  bg-center bg-no-repeat bg-cover">
+        <div className=" h-[100%] pt-[2%]  bg-no-repeat bg-cover text-white ">
+            <div className=" h-[98%] w-[95%]  m-auto rounded-4xl bg-[url(/images/loginPage.png)] bg-center bg-no-repeat bg-cover p-6 flex flex-col justify-between">
+                <h1 className="text-2xl font-bold text-amber-400 ">CRUX</h1>
                 
+                <br />
+                <p className="font-light">
+                    <p className="text-2xl mb-3.5 ">Core-Level Performance. <br />Every <span className="text-zinc-500">Stream.</span> </p>
+                    
+                    CRUX is a high-performance video streaming platform built for speed, quality, and simplicity. We focus on what truly matters — delivering seamless, bitrate-optimized content without the noise. Whether you're watching or uploading, CRUX keeps things fast, clean, and reliable.</p>
             </div>
         </div>
       <form action=""  onSubmit={(e)=>{btnClicked(e)}} className='signupForm text-neutral-300 max-w-[300px] m-auto mt-[10vw]' >
@@ -79,12 +84,7 @@ function LoginPage() {
         <h1 className="text-3xl font-[Ancizar Sans]      font-extrabold mb-5 text-center">Log-in</h1>
 
         <p className="">enter your credentials to log-in</p>
-        <br />
-        Name :
-        <br />
-        <input type="text" name='userName' value = {value.userName} onChange={(e)=>{onChange(e)}} className='order-black' required/>
-        <br />
-        {currentField == 'userName' ? er : <></>}
+        <br />        
         <br />
 
         email :

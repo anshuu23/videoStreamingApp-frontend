@@ -10,7 +10,7 @@ export default function SearchBar() {
                     xmlns="http://www.w3.org/2000/svg"
                     role="img"
                     aria-labelledby="search"
-                    className="w-5 h-5 text-white-700"
+                    className="w-5 h-5 text-black"
                 >
                     <path
                         d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9"
@@ -22,13 +22,13 @@ export default function SearchBar() {
                 </svg>
             </button>
             <input
-                className="input md:w-[400px] rounded-full px-8 py-1.5 border-1 border-white focus:outline-none  placeholder-gray-400 transition-all duration-300 shadow-[0_0_4px_1px_rgba(255,255,255,0.5)] bg-black text-white "
+                className="input md:w-[400px] rounded-full px-8 py-1.5 border-1 border-white focus:outline-none  placeholder-gray-400 transition-all duration-300  bg-white text-black "
                 />
 
             <button type="reset" className="absolute right-3 -translate-y-1/2 top-1/2 p-1">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5 text-white-700"
+                    className="w-5 h-5 text-black"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

@@ -47,6 +47,7 @@ const  AppRouter = createBrowserRouter([
                 path : '/upload' ,
                 element : (
                     <>
+                        <Navbar />    
                         <VideoDetailsForm />
                     </>
                 )
