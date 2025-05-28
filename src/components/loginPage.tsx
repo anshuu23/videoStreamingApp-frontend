@@ -1,4 +1,4 @@
-import { FormEvent, useState , useEffect } from "react";
+import { FormEvent, useState  } from "react";
 import "../index.css"
 import { useNavigate  } from "react-router-dom";
 import { apiRequest } from "../helper/request";
@@ -12,6 +12,8 @@ function LoginPage() {
 
   const [er , changeEr]= useState('')
   const [currentField , changeCurrentField] = useState('')
+const [errorFromServer , ChangeErrorFromServer]= useState('')
+
 
   const btnClicked = async(e :  FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -28,6 +30,9 @@ function LoginPage() {
          console.log(res.status)
         navigate('/')
     }
+    else if(res.error.statusCode == 400){
+        ChangeErrorFromServer(res.msg)
+    }
   }
 
   const onChange = (e :  React.ChangeEvent<HTMLInputElement>) =>{
@@ -38,17 +43,16 @@ function LoginPage() {
     validateInput(e.target.name , e.target.value)
     changeCurrentField(e.target.name)
   }
+const validateInput = (name : string ,value : string) =>{
 
-  const validateInput = (name : string ,value : string) =>{
-
-    if(name == "userName"){
+    if(name == "userName" || name == "password"){
       
-      if(value.length<3){
-        changeEr(`${name} length should me more than 3`)
+      if(value.length<5){
+        changeEr(`${name} length should me more than 5`)
         
       }
-      else if(value.length > 10){
-        changeEr(`${name} length must me less than 10`)
+      else if(value.length > 30){
+        changeEr(`${name} length must me less than 30`)
       }
       else{
         changeEr('')
@@ -57,7 +61,7 @@ function LoginPage() {
     }
 
      else if(name == "email" && !value.includes('@')){
-      changeEr(`pls ente rvalid email`)
+      changeEr(`pls ente valid email`)
     }else{
       changeEr(``)
     }
@@ -90,20 +94,26 @@ function LoginPage() {
         email :
         <input type="email" name='email' value = {value.email} onChange={(e)=>{onChange(e)}} className='border-black' required />
         <br />
-        {currentField == 'email' && er ? er : <></>}
+        {currentField == 'email' && er ? <p className="text-red-700"> {er} </p> : <></>}
         <br />
 
         Password :
         <input type="password" name='password' value = {value.password} onChange={(e)=>{onChange(e)}} 
-        className='border-black' required />
+        className='border-black' required minLength={5} maxLength={30} />
         <br />
-        {currentField == 'password' && er ? er : <></>}   
+        {currentField == 'password' && er ?<p className="text-red-700"> {er} </p> : <></>}   
         <br />
-
         <button type='submit' className="!bg-amber-400 !text-black font-extrabold cursor-pointer ">log-in</button>
         <br />
+        {errorFromServer && (
+            <p className="text-red-700">{ errorFromServer} </p>
+        )
+
+        }
         <br />
         <p>new user ? <a href="/user/signup" className="!text-amber-400 underline">sign-up</a> to crux</p>
+
+        
       </form>
      </div>
     </>

@@ -1,4 +1,4 @@
-import { useEffect , createContext , useContext } from "react";
+import {   createContext  } from "react";
 
 const DataContext = createContext('');
 
@@ -9,7 +9,7 @@ const ContextProvider = (props : any) =>{
 
 
         return(
-            <DataContext.Provider value={{ token, role}}} >
+            <DataContext.Provider value ={{ token, role}} >
                 {props.children}
             </DataContext.Provider>
         )

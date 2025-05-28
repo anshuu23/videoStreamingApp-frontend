@@ -14,6 +14,7 @@ function VideoDetailsForm() {
     const [videoName, setVideoName] = useState('');
     const [isFileAdded, setIsFileAdded] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [isVideoUploadedBtnClicked, setIsVideoUploadedBtnClicked] = useState(false);
 
     const [value, changeValue] = useState({
         videoTitle: "",
@@ -48,6 +49,7 @@ function VideoDetailsForm() {
 
 
     const [parsedRes, changeParsedRes] = useState("");
+    const [isUploadDetailButtonClicked, changeIsUploadDetailButtonClicked] = useState(false);
 
 
     function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -68,7 +70,7 @@ function VideoDetailsForm() {
 
     async function formSubmitted(e: React.FormEvent) {
         e.preventDefault();
-
+        changeIsUploadDetailButtonClicked(true)
         const formData = new FormData();
         formData.append("title", value.videoTitle);
         formData.append("description", value.videoDescription);
@@ -132,6 +134,7 @@ function VideoDetailsForm() {
         }
 
     const handleVideoFileUpload = async () => {
+        setIsVideoUploadedBtnClicked(true)
     if (!selectedFile || !signedUrl) {
         alert("No file selected or signed URL missing.");
         return;
@@ -147,7 +150,8 @@ function VideoDetailsForm() {
         });
 
         if (res.ok) {
-            alert('✅ Upload successful');
+            alert('✅ Upload successful, it will take some time to go live');
+            navigate("/")
         } else {
             alert('❌ Upload failed');
         }
@@ -222,7 +226,8 @@ function VideoDetailsForm() {
 
                     <br /><br />
                     Visibility:
-                    <select name="visibility" value={value.visibility} onChange={handleInputChange}>
+                    <br /><br />
+                    <select name="visibility" className="text-black bg-white rounded-[5px] py-2 px-2" value={value.visibility} onChange={handleInputChange}>
                         <option value="public">Public</option>
                         <option value="private">Private</option>
                         <option value="unlisted">Unlisted</option>
@@ -240,7 +245,8 @@ function VideoDetailsForm() {
 
                     <br />
                     <br />
-                    <button type="submit" className="!bg-blue-500 font-bold text-2xl">Continue to Upload Video</button>
+                    {!isUploadDetailButtonClicked &&
+                    <button type="submit" className="!bg-blue-500 font-bold text-2xl">Continue to Upload Video</button>}
 
                     {parsedRes && <p>{parsedRes}</p>}
                 </form>
@@ -268,7 +274,9 @@ function VideoDetailsForm() {
                                     {selectedFile && <p>Selected: {selectedFile.name}</p>}
 
                                 </p>
-                                <button onClick={handleVideoFileUpload} className="h-13 w-34  bg-amber-400 rounded-3xl p-2 mt-5 text-black cursor-pointer">Upload</button>
+                                { !isVideoUploadedBtnClicked ?
+                                <button onClick={handleVideoFileUpload} className="h-13 w-34  bg-amber-400 rounded-3xl p-2 mt-5 text-black cursor-pointer">Upload</button> : <p>Your video is being uploaded to server, pls wait......</p>
+                                }
                             </>
 
                             

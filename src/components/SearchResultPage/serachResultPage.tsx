@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react"
-import VideoCard from "./videoCard/videoCard"
-import { apiRequest } from "../helper/request"
-import { useNavigate } from "react-router-dom"
+import { apiRequest } from "../../helper/request"
+import VideoCard from "../videoCard/videoCard"
+import { useLocation } from "react-router-dom"
 
-
-function MainPage(){
-    const navigate = useNavigate()
+function SearchResultPage(){
     const [data , setData] = useState([]) 
-    const token = localStorage.getItem("token") as string
+    const location = useLocation();
+
     useEffect( ()=>{
+
+        const searchParams = new URLSearchParams(location.search);
+
+        const searchValue = searchParams.get('query'); 
+
+        console.log("Query param name:", searchValue);
+  
         (async()=>{
-           const res : any = await apiRequest('/getVideos' , {
-            method : 'GET' ,token 
-            }) 
+           const res : any = await apiRequest("/search/"+searchValue , {
+            method : 'GET' ,
+            })
             if(res.status !== 200){
-                 localStorage.removeItem("token")
-                navigate("/user/login")
-            }
-            if(res.status === 400){
-               
+                alert("error in loadin data")
             }
             setData(res.data)
         })()
@@ -37,4 +39,4 @@ function MainPage(){
     )
 }
 
-export {MainPage}
+export {SearchResultPage}

@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { Navbar } from "../components/navbar/navbar";
 import { LoginPage } from "../components/loginPage";
 import { MainPage } from "../components/mainPage";
@@ -8,6 +8,8 @@ import { AdminDashBoard } from "../components/adminDashboard";
 import WatchVideoPage from "../components/watchVideo";
 import { VideoDetailsForm } from "../components/uploads/videoDetails";
 import { UserRoutes } from "./userRoutes";
+import DashboardPage from "../components/dashboard/dashboardPage";
+import { SearchResultPage } from "../components/SearchResultPage/serachResultPage";
 
 
 const  AppRouter = createBrowserRouter([
@@ -57,7 +59,7 @@ const  AppRouter = createBrowserRouter([
                 path : '/video/:id' ,
                 element : (
                     <>
-                        <Navbar />    
+                        <Navbar searchBar />    
                         <WatchVideoPage />
                     </>
                 )
@@ -67,8 +69,26 @@ const  AppRouter = createBrowserRouter([
                 path : '/' ,
                 element : (
                     <>
-                        <Navbar /> 
+                        <Navbar searchBar/> 
                         <MainPage />
+                    </>
+                )
+            },
+            {
+                path : '/dashboard' ,
+                element : (
+                    <>
+                        <Navbar /> 
+                        <DashboardPage />
+                    </>
+                )
+            },
+            {
+                path : '/search' ,
+                element : (
+                    <>
+                        <Navbar searchBar/> 
+                        <SearchResultPage />
                     </>
                 )
             },

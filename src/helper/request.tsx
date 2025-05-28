@@ -1,6 +1,5 @@
 // utils/request.ts
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-
 interface RequestOptions {
   method?: RequestMethod;
   headers?: Record<string, string>;
@@ -29,6 +28,10 @@ export async function apiRequest<T>(
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, fetchOptions);
     const data = await response.json();
+
+    if (response.status == 400 || response.status == 409 ) {
+        return data
+    } 
 
     if (!response.ok) {
       throw new Error(data?.message || 'Request failed');
