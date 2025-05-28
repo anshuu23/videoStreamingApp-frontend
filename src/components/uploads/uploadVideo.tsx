@@ -120,14 +120,12 @@ import React, { useState, useEffect } from 'react';
 
 const UploadS3 = () => {
   const [signedUrl, setSignedUrl] = useState('');
-  const [videoName, setVideoName] = useState('');
 
   useEffect(() => {
     fetch('http://localhost:3002/getSignedUrl')
       .then((res) => res.json())
       .then((res) => {
         setSignedUrl(res.data[0]);
-        setVideoName(res.data[1]);
       });
   }, []);
 

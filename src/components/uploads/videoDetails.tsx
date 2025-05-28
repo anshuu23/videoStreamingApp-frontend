@@ -11,8 +11,6 @@ function VideoDetailsForm() {
         "News", "Spirituality"
     ];
     const [signedUrl, setSignedUrl] = useState('');
-    const [videoName, setVideoName] = useState('');
-    const [isFileAdded, setIsFileAdded] = useState(false);
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isVideoUploadedBtnClicked, setIsVideoUploadedBtnClicked] = useState(false);
 
@@ -102,7 +100,6 @@ function VideoDetailsForm() {
         let parsedRes = await res.json()
         if (parsedRes.data) {
             setSignedUrl(parsedRes.data[0]);
-            setVideoName(parsedRes.data[1]);
         }
 
         const result = await res.json();
@@ -129,8 +126,6 @@ function VideoDetailsForm() {
             return;
         }
         setSelectedFile(file);
-        setIsFileAdded(true)
-
         }
 
     const handleVideoFileUpload = async () => {
