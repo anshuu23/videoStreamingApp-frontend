@@ -37,7 +37,7 @@ export default function SearchBar() {
             </button>
 
             <input
-                className="input md:w-[400px] rounded-full px-8 py-1.5 border-1 border-white focus:outline-none  placeholder-gray-400 transition-all duration-300  bg-white text-black"
+                className="input md:w-[400px] rounded-full px-3 pl-8  md:px-8 py-1 md:py-1.5 border-1 border-white focus:outline-none  placeholder-gray-400 transition-all duration-300  bg-white text-black"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."

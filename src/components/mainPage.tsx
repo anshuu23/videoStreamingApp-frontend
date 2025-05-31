@@ -9,6 +9,7 @@ function MainPage(){
     const [data , setData] = useState([]) 
     const token = localStorage.getItem("token") as string
     useEffect( ()=>{
+        
         (async()=>{
            const res : any = await apiRequest('/getVideos' , {
             method : 'GET' ,token 
@@ -20,7 +21,7 @@ function MainPage(){
             if(res.status === 400){
                
             }
-            setData(res.data)
+            setData(res.data) 
         })()
         
     },[])
