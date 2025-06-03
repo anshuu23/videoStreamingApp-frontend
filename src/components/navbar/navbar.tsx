@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import './navbar.scss'
 import SearchBar from './searchBar'
-import { useState } from 'react'
 function Navbar(props : any ){
-    const [isMobile , setIsMobile] = useState(false)
     const navigate = useNavigate()
     return(
         <div className='flex items-center h-[8vh] px-[3%] m-auto justify-between bg-[#1e1d1d] text-white fixed w-full z-10 ' >
