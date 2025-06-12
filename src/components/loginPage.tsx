@@ -88,10 +88,14 @@ const validateInput = (name : string ,value : string) =>{
         <h1 className="text-3xl font-[Ancizar Sans]      font-extrabold mb-5 text-center">Log-in</h1>
 
         <p className="">enter your credentials to log-in</p>
-        <br />        
+            
         <br />
-
-        email :
+        <p className="text-gray-300"> Demo Credentials:</p>
+        <p><b>Email :</b> anshumj321@gmail.com</p>
+        <p> <b>Password :</b>12345</p>
+        <br />
+        
+        Email :
         <input type="email" name='email' value = {value.email} onChange={(e)=>{onChange(e)}} className='border-black' required />
         <br />
         {currentField == 'email' && er ? <p className="text-red-700"> {er} </p> : <></>}
