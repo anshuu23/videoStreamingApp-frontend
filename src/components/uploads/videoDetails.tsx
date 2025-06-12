@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 function VideoDetailsForm() {
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ function VideoDetailsForm() {
         }
         const token = localStorage.getItem("token")
 
-        const res = await fetch("http://localhost:3000/video-details", {
+        const res = await fetch(`${BASE_URL}/video-details`, {
             method: "POST",
             body: formData,
             headers: {

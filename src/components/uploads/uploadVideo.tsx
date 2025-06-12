@@ -117,12 +117,13 @@
 
 
 import React, { useState, useEffect } from 'react';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const UploadS3 = () => {
   const [signedUrl, setSignedUrl] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:3002/getSignedUrl')
+    fetch(`${BASE_URL}/getSignedUrl`)
       .then((res) => res.json())
       .then((res) => {
         setSignedUrl(res.data[0]);
